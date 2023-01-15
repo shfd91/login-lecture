@@ -6,11 +6,10 @@ const app = express();
 const port = 3000;
 
 // routing
-const home = require('./routes/home');
-
+const home = require('./src/routes/home');
 
 // app setting
-app.set('views', './views');
+app.set('views', './src/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
