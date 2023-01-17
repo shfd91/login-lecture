@@ -7,20 +7,22 @@ class User {
     this.body = body;
   }
 
-  login() {
+  async login() {
     const client = this.body;
-    const {id, psword} = UserStorage.getUsers(client.id);
-    console.log(id);
-    console.log(psword);
-    console.log(client.id);
-    console.log(client.psword);
+    const {id, psword} = await UserStorage.getUserInfo(client.id);
+    // console.log("id:",id);
+    // console.log("psword:",psword);
+    // console.log("client.id:", client.id);
+    // console.log("client.psword:",client.psword);
     if (id) {
       if (id === client.id && psword === client.psword){
         return { success: true };
+      } else {
+        return { success: false, msg: "비밀번호가 틀렸습니다."};
       }
-      return { success: false, msg: "비밀번호가 틀렸습니다."};
+    } else {
+      return { success: false, msg: "존재하지 않는 아이디입니다."};
     }
-    return { success: false, msg: "존재하지 않는 아이디입니다."};
   }
 
   register() {

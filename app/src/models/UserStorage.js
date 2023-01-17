@@ -1,15 +1,22 @@
 'use strict';
 
+// promise를 반환하도록 설정
+const fs = require("fs").promises;
+
 class UserStorage {
-  // #데이터 은닉화
-  static #users = {
-    id: ["woorimIT", "나개발", "김팀장", "abc"],
-    psword: ["1234", "1234", "123456", "abc"],
-    name: ["우리밋", "나개발", "김팀장"],
-  };
+  static #getUserInfo(data, id) {
+    const users = JSON.parse(data);
+    const idx = users.id.indexOf(id);
+    const userKeys = Object.keys(users) // => [id, psword, name]
+    const userInfo = userKeys.reduce((newUser, info) => {
+      newUser[info] = users[info][idx];
+      return newUser;
+    }, {});
+    return userInfo;
+  }
 
   static getUsers(...fields) {
-    const users = this.#users;
+    // const users = this.#users;
     // reduce?
     // 받은 아규먼트만 보내기 위한 처리
     const newUsers = fields.reduce((newUsers, field) => {
@@ -18,22 +25,32 @@ class UserStorage {
       }
       return newUsers;
     }, {});
-    return this.#users;
+    console.log("newUsers =", newUsers);
+    return newUsers;
   }
 
   static getUserInfo(id) {
-    const users = this.#users;
-    const idx = users.id.indexOf(id);
-    const userKeys = Object.keys(users)
-    const userInfo = userKeys.reduce((newUser, info) => {
-      newUser[info] = users[info][idx];
-      return newUser;
-    }, {});
-    return userInfo;
+    return fs.readFile("./src/databases/users.json")
+      .then(data => {
+        return this.#getUserInfo(data, id);
+      })
+      .catch(console.error);
+
+    // , (err, data) => {
+    //   if (err) throw err;
+    //   const users = JSON.parse(data);
+    //   const idx = users.id.indexOf(id);
+    //   const userKeys = Object.keys(users) // => [id, psword, name]
+    //   const userInfo = userKeys.reduce((newUser, info) => {
+    //     newUser[info] = users[info][idx];
+    //     return newUser;
+    //   }, {});
+    //   return userInfo;
+    // });
   }
 
   static save(userInfo) {
-    const users = this.#users;
+    // const users = this.#users;
     users.id.push(userInfo.id);
     users.name.push(userInfo.name);
     users.psword.push(userInfo.psword);

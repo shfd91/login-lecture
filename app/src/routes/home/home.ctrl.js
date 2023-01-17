@@ -1,6 +1,7 @@
 'use strict';
 const User = require("../../models/User");
 
+// get으로 요청하면 여기로
 const output = {
   home: (req, res) => {
     res.render('home/index.html');
@@ -13,13 +14,14 @@ const output = {
   }
 }
 
-
+// post로 요청하면 여기로
 const process = {
-  login: (req, res) => {
+    login: async (req, res) => {
     // User를 인스턴스화할 때 req.body를 값으로 가짐
     // console.log("req.body : ", req.body);
+    console.log("req.body:", req.body);
     const user = new User(req.body);
-    const response = user.login();
+    const response = await user.login();
     console.log(response);
     return res.json(response);
   },

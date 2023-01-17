@@ -35,6 +35,7 @@ function handleRegister(e) {
       if (res.success) {
         location.href = "/login";
       } else {
+        alert(res.msg);
         const p = document.createElement('p');
         p.innerText = res.msg;
         document.body.appendChild(p);
