@@ -1,10 +1,11 @@
 'use strict';
 
 const id = document.querySelector('#id');
-const psword = document.querySelector('#pw');
+const psword = document.querySelector('#psword');
 const loginBtn = document.querySelector('button');
 
-function handleLogin() {
+function handleLogin(e) {
+  e.preventDefault();
   const req = {
     id: id.value,
     psword: psword.value,
@@ -22,7 +23,7 @@ function handleLogin() {
         location.href = "/";
       } else {
         const p = document.createElement('p');
-        p.innerText = '로그인에 실패하였습니다.';
+        p.innerText = res.msg;
         document.body.appendChild(p);
       }
     })

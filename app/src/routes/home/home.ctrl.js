@@ -7,6 +7,9 @@ const output = {
   },
   login: (req, res) => {
     res.render('home/login.html');
+  },
+  register: (req, res) => {
+    res.render('home/register.html');
   }
 }
 
@@ -19,6 +22,7 @@ const process = {
     const response = user.login();
     console.log(response);
     return res.json(response);
+  },
 
 
     // const id = req.body.id;
@@ -27,15 +31,22 @@ const process = {
     // const users = UserStroage.getUsers("id", "psword");
     // const response = {};
     // if (users.id.includes(id)) {
-    //   const idx = users.id.indexOf(id);
-    //   if (users.psword[idx] === psword){
-    //     response.success = true;
-    //     return res.json(response);
-    //   }
-    // }
-    // response.success = false;
-    // response.msg = "로그인에 실패하셨습니다.";
-    // return res.json(response);
+      //   const idx = users.id.indexOf(id);
+      //   if (users.psword[idx] === psword){
+        //     response.success = true;
+        //     return res.json(response);
+        //   }
+        // }
+        // response.success = false;
+        // response.msg = "로그인에 실패하셨습니다.";
+        // return res.json(response);
+    register: (req, res) => {
+      const user = new User(req.body);
+      const response = user.register();
+      console.log(response);
+      // 클라이언트에 응답
+      return res.json(response);
+
   }
 }
 

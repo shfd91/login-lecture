@@ -8,17 +8,25 @@ class User {
   }
 
   login() {
-    const body = this.body;
-    const {id, psword} = UserStorage.getUsers(body.id);
-    console.log(id, psword);
-    console.log(body.id, body.psword);
+    const client = this.body;
+    const {id, psword} = UserStorage.getUsers(client.id);
+    console.log(id);
+    console.log(psword);
+    console.log(client.id);
+    console.log(client.psword);
     if (id) {
-      if (id === body.id && psword === body.psword){
+      if (id === client.id && psword === client.psword){
         return { success: true };
       }
       return { success: false, msg: "비밀번호가 틀렸습니다."};
     }
     return { success: false, msg: "존재하지 않는 아이디입니다."};
+  }
+
+  register() {
+    const client = this.body;
+    const response = UserStorage.save(client);
+    return response;
   }
 }
 
