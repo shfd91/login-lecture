@@ -35,10 +35,11 @@ function handleRegister(e) {
       if (res.success) {
         location.href = "/login";
       } else {
+        if (res.err) return alert(res.err);
         alert(res.msg);
-        const p = document.createElement('p');
-        p.innerText = res.msg;
-        document.body.appendChild(p);
+        // const p = document.createElement('p');
+        // p.innerText = res.msg;
+        // document.body.appendChild(p);
       }
     })
     .catch((err) => {
